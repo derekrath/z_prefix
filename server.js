@@ -24,7 +24,7 @@ app.get('/', async (req,res) => {
 //     console.log('Posting from /');
 // let data = req.body;
 
-//     const result = await knex('db')
+//     const result = await knex('users')
 //         .returning('*')
 //         .insert(data)
 //         .then(data => data)
