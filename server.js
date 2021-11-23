@@ -13,12 +13,12 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// app.get('/', async (req,res) => {
-//     console.log('Getting from /');
-//     const result = await knex('db')
-//         .select('*');
-//     res.status(200).json(result);
-// });
+app.get('/', async (req,res) => {
+    console.log('Getting from /');
+    const result = await knex('users')
+        .select('*');
+    res.status(200).json(result);
+});
 
 // app.post('/', async (req,res) => {
 //     console.log('Posting from /');
