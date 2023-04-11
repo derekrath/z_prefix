@@ -1,9 +1,9 @@
 // const { app } = require('../ui/src/index.js');
 const express = require('express');
 const app = express();
-// const PORT = 3000;
+const PORT = 3000;
 const PORT = (process.env.PORT) // THIS IS IMPORTANT - HEROKU DECIDES WHICH PORT
-// require("dotenv").config();
+require("dotenv").config();
 // const PORT = process.env.PORT || 3001;
 const knex = require('knex')(require('./knexfile.js')[process.env.NODE_ENV || 'development']);
 const cors = require('cors');
@@ -36,7 +36,7 @@ function getPasswordHashByUser(username){
     //     .then((data) => data[0].passwordHash)
 }
 
-function createNewUser(username, passwordHash){
+async function createNewUser(username, passwordHash){
     await knex('users')
         .where({ username })
         .then(result => {
