@@ -1,14 +1,14 @@
 require("dotenv").config();
 
 // Update with your config settings.
-// const connection = process.env.DB_CONNECTION_STRING;
+const connection = process.env.DB_CONNECTION_STRING;
 // <<use this for dev without ssl
-const connection = {
-  connectionString: process.env.DB_CONNECTION_STRING, // IMPORTANT - HEROKU SETS THIS AND CHANGES IT PERIODICALLY
-  ssl: {
-    rejectUnauthorized: false,
-  },
-};
+// const connection = {
+//   connectionString: process.env.DB_CONNECTION_STRING, // IMPORTANT - HEROKU SETS THIS AND CHANGES IT PERIODICALLY
+//   ssl: {
+//     rejectUnauthorized: false,
+//   },
+// };
 // <<use this for production
 
 module.exports = {

@@ -1,10 +1,10 @@
 // const { app } = require('../ui/src/index.js');
 const express = require('express');
 const app = express();
-const PORT = 3000;
-const PORT = (process.env.PORT) // THIS IS IMPORTANT - HEROKU DECIDES WHICH PORT
+// const PORT = 3000; //this is the ui port no?
+// const PORT = (process.env.PORT) // THIS IS IMPORTANT - HEROKU DECIDES WHICH PORT
 require("dotenv").config();
-// const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 3001; //gonna use this one in dev?
 const knex = require('knex')(require('./knexfile.js')[process.env.NODE_ENV || 'development']);
 const cors = require('cors');
 const morgan = require('morgan');
