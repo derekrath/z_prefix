@@ -1,17 +1,16 @@
-FROM node:16-alpine
+# This file containerizes the application
 
-# RUN mkdir -p /src/app
+# update alpine from 16 to latest
+# FROM node:16-alpine
+FROM node:latest
+
+# RUN mkdir -p /server
 
 WORKDIR /server
 
-COPY . /server
+# COPY . /server
 
-EXPOSE 3001
-
-EXPOSE 3000
-
-# //remove for production (dont expose to public)
-# EXPOSE 5432
+COPY . .
 
 RUN rm -f node_modules
 
@@ -25,4 +24,15 @@ RUN npm install -g nodemon
 #   npm rebuild bcrypt --build-from-source && \
 #   apk del make gcc g++ python
 
-CMD npm start
+# EXPOSE 3001
+EXPOSE 8080
+
+EXPOSE 3000
+# Why am I exposing the ui port here if my backend and frontend are separate?
+
+# remove for production (dont expose to public)
+EXPOSE 5432
+
+# CMD npm start
+
+CMD ["npm", "run", "start"] 

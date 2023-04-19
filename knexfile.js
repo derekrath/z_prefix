@@ -1,10 +1,48 @@
-require("dotenv").config();
+//to set up a container in docker for development: docker run --name container -e POSTGRES_PASSWORD=docker -p 5432:5432 -d postgres:14.1
+//postgres://${process.env.PGUSER}:${process.env.PGPASSWORD}@${process.env.PGHOST}:${process.env.PGPORT}/${process.env.PGDATABASE}
 
+// const connect = {
+//   client: "pg",
+//   connection: `postgres://${process.env.PGUSER}:${process.env.PGPASSWORD}@${process.env.PGHOST}:${process.env.PGPORT}/${process.env.PGDATABASE}`,
+//   ssl: {
+//     rejectUnauthorized: false,
+//   },
+// };
+
+// module.exports = {
+//   development: connect,
+//   staging: connect,
+//   production: connect,
+// };
+
+// connection: 'postgres://postgres:docker@localhost/postgres'
+const connectionString = process.env.DB_CONNECTION_STRING; 
+// const connectionString = process.env.DATABASE_URL;
+// const connection = {
+//   client: "pg",
+//   connection: process.env.DB_CONNECTION_STRING,
+//   pool: {
+//     min: 2,
+//     max: 10
+//   },
+//   migrations: {
+//     tableName: 'knex_migrations'
+//   }
+// };
+// console.log(process.env.DB_CONNECTION_STRING)
+// >>>>>>  postgres://postgres:docker@db:5432/postgres
 // Update with your config settings.
-const connection = process.env.DB_CONNECTION_STRING;
+// const connection = process.env.DB_CONNECTION_STRING;
 // <<use this for dev without ssl
 // const connection = {
-//   connectionString: process.env.DB_CONNECTION_STRING, // IMPORTANT - HEROKU SETS THIS AND CHANGES IT PERIODICALLY
+  // connectionString: process.env.DB_CONNECTION_STRING, // IMPORTANT - HEROKU SETS THIS AND CHANGES IT PERIODICALLY
+//   ssl: {
+//     rejectUnauthorized: false,
+//   },
+// };
+// THIS IS YOUR PRODUCTION CONNECTION - NOTE THE SSL SETTING
+// const connection = {
+//   connectionString: process.env.DATABASE_URL, // IMPORTANT - HEROKU SETS THIS AND CHANGES IT PERIODICALLY
 //   ssl: {
 //     rejectUnauthorized: false,
 //   },
@@ -14,45 +52,42 @@ const connection = process.env.DB_CONNECTION_STRING;
 module.exports = {
 
   development: {
-    client: 'pg',
-    connection: connection
+    client: "pg",
+    // connection: connectionString,
+    // connection: 'postgres://postgres:docker@localhost/postgres',
+    connection: 'postgres://postgres:docker@db:5432/postgres',
     // connection: process.env.DB_CONNECTION_STRING,
-    // connection: 'postgres://postgres:docker@localhost/postgres'
+    pool: {
+      min: 2,
+      max: 10,
+    },
+    // migrations: {
+    //   // tableName: "knex_migrations",
+    //   tableName: "users_table",
+    // },
   },
 
   staging: {
-    client: 'postgresql',
-    connection: {
-      // database: 'my_db',
-      database: 'db',
-      user:     'username',
-      password: 'password'
-    },
+    client: "pg",
+    connection: connectionString,
     pool: {
       min: 2,
-      max: 10
+      max: 10,
     },
-    migrations: {
-      tableName: 'knex_migrations'
-    }
+    // migrations: {
+    //   tableName: "knex_migrations",
+    // },
   },
 
   production: {
-    client: 'pg',
-    // client: 'postgresql',
-    connection,
-    // connection: {
-    //   // database: 'my_db',
-    //   database: 'db',
-    //   user:     'username',
-    //   password: 'password'
-    // },
-    // pool: {
-    //   min: 2,
-    //   max: 10
-    // },
+    client: "pg",
+    connection: { connectionString, ssl: { rejectUnauthorized: false } },
+    pool: {
+      min: 2,
+      max: 10,
+    },
     // migrations: {
-    //   tableName: 'knex_migrations'
-    // }
+    //   tableName: "knex_migrations",
+    // },
   },
 };
