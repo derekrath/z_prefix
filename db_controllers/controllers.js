@@ -1,3 +1,5 @@
+// controls communication with database
+
 // const config = require("postgres/lib/types");
 const knex = require("./dbConnection");
 
@@ -10,24 +12,33 @@ const knex = require("./dbConnection");
 // update blogs
 
 function getPasswordHashByUser(username){
-    knex.select('id', 'username', 'passwordHash')
+    // return knex.select('id', 'username', 'passwordHash')
+    return knex.select('passwordHash')
     .from('users_table')
     .where({username})
-    .then(data => {
-      if (data.length > 0) {
-        res.status(200).json(data[0].passwordHash)
-      }
-      else {
-        res.status(404).json('No username found')
+    // .then(data => data[0].passwordHash)
+    .then((result) => {
+      if (result.length < 1) {
+        return undefined
+    //     // console.log('result', res)
+        // res.status(401).send("Invalid login")
+      } else {
+        // res.json(result[0].passwordHash)
+        return result[0].passwordHash
       }
     })
-    .catch(err =>
-      res.status(404).json('The data you are looking for could not be found. Please try again')
-    );
-    // return knex('users_table')
-    //     .where({username})
-    //     .select('passwordHash')
-    //     .then((data) => data[0].passwordHash)
+    // .then(data => {
+    //   if (data.length > 0) {
+    //     res.status(200).json(data[0].passwordHash)
+      // }
+    //   else {
+    //     console.log('no user found')
+    //     res.status(404).json('No username found')
+    //   }
+    // })
+    // .catch(err =>
+    //   res.status(404).json('The data you are looking for could not be found. Please try again')
+    // );
 }
 
 async function createNewUser(username, passwordHash){
@@ -35,13 +46,19 @@ async function createNewUser(username, passwordHash){
         .where({ username })
         .then(result => {
             if (result.length > 0) {
-                res.status(409).send('This username is already in use.')
+              console.log('username already in use');
+              // return result;
+              // res.status(409).send('This username is already in use.')
             } else {
-            knex('users_table')
+              console.log('creating new user');
+              knex('users_table')
                 .insert({ username, passwordHash })
                 .returning(['id', 'username'])
-                .then(newUser => res.status(201).json(newUser[0]))
-                // .then(data=>data);
+                .then((data) => 
+                  console.log('new insert data:', data)
+                )
+                // .then(newUser => res.status(201).json(newUser[0]))
+                .then(data=>data);
             }
       })
 }
