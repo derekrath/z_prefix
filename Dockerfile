@@ -31,7 +31,7 @@ EXPOSE 3000
 # Why am I exposing the ui port here if my backend and frontend are separate?
 
 # remove for production (dont expose to public)
-EXPOSE 5432
+# EXPOSE 5432
 
 # CMD npm start
 

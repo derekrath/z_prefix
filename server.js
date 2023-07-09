@@ -4,8 +4,9 @@ const app = require('./app');
 require("dotenv").config();
 // const PORT = (process.env.PORT) // THIS IS IMPORTANT - HEROKU DECIDES WHICH PORT
 // alternative:
-const port = process.env.PGPORT || 8080; //gonna use this one in dev? changed 3001 to 8080
+// const port = process.env.PGPORT || 8080; //gonna use this one in dev? changed 3001 to 8080
 // const port = 8080;
+const port = process.env.PORT || 8080;
 
 app.listen(port, () => {
     console.log(`Server is listening on http://localhost:${port}`);
