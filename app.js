@@ -210,31 +210,34 @@ app.post('/blogs', (req, res) => {
 });
 
 // //edit blog
-// app.put('/blogs', (req, res) => {
-//     let blog_username = req.body.blog_username;
-//     let title = req.body.title;
-//     let content = req.body.content;
-//     //check if user exists
-//     knex('users_table')
-//         .where({user_username: blog_username})
-//         .then(data => {
-//             if (data.length > 0 && content.length < 100 ) {
-//                 //if user exists, post blog for user
-//                 console.log('data.length: ', data.length)
-//                 knex('blogs_table')
-//                 .where({title: title})
-//                 .update({
-//                     content: content})
-//                 .returning('title')
-//                 .then((data) = res.status(201).json(`BLOG UPDATED ${title}`))
-//             } else {
-//                 console.log('401 Please Login')
-//                 res.status(401).send('Please Login.')
-//                 //dont post blog for user
-//             }
-//         })
-//         .catch((err) => res.status(500).json(err))
-// });
+app.put('/blogs', (req, res) => {
+    let blog_username = req.body.blog_username;
+    let title = req.body.title;
+    let content = req.body.content;
+    console.log('edited blog user: ', blog_username);
+    console.log('edited blog title: ', title);
+    console.log('edited blog content: ', content);
+    //check if user exists
+    // knex('users_table')
+        // .where({user_username: blog_username})
+        // .then(data => {
+            // if (data.length > 0 && content.length < 100 ) {
+                //if user exists, post blog for user
+                // console.log('data.length: ', data.length)
+                knex('blogs_table')
+                .where({title: title})
+                .update({
+                    content: content})
+                .returning('title')
+                .then((data) = res.status(201).json(`BLOG UPDATED ${title}`))
+            // } else {
+                // console.log('401 Please Login')
+                // res.status(401).send('Please Login.')
+                //dont post blog for user
+            // }
+        // })
+        .catch((err) => res.status(500).json(err))
+});
 
 // //delete blog
 // app.delete('/blogs/:title', (req, res) => {
