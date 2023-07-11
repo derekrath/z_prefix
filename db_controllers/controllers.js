@@ -15,7 +15,8 @@ function getPasswordHashByUser(username){
     // return knex.select('id', 'username', 'passwordHash')
     return knex.select('passwordHash')
     .from('users_table')
-    .where({username})
+    // .where({username})
+    .where({ user_username: username })
     // .then(data => data[0].passwordHash)
     .then((result) => {
       if (result.length < 1) {
@@ -43,7 +44,8 @@ function getPasswordHashByUser(username){
 
 async function createNewUser(username, passwordHash){
     await knex('users_table')
-        .where({ username })
+        // .where({ username })
+        .where({ user_username: username })
         .then(result => {
             if (result.length > 0) {
               console.log('username already in use');
@@ -52,8 +54,8 @@ async function createNewUser(username, passwordHash){
             } else {
               console.log('creating new user');
               knex('users_table')
-                .insert({ username, passwordHash })
-                .returning(['id', 'username'])
+                .insert({ user_username: username, passwordHash })
+                .returning(['id', 'user_username'])
                 .then((data) => 
                   console.log('new insert data:', data)
                 )

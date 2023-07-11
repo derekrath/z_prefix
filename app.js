@@ -25,14 +25,14 @@ console.log(`NODE ENVIRONMENT IN HEROKU: `, process.env.NODE_ENV);
 //create user
 app.post('/users', (req, res) => {
     let { body } = req;
-    let { username, passwordRaw } = body;
-    console.log('user received: ', username)
+    let { user_username, passwordRaw } = body;
+    console.log('user received: ', user_username)
 
     hash(passwordRaw, saltRounds)
         .then((passwordHash) => {
             console.log('Raw password: ', passwordRaw)
             console.log('Hashed Password: ', passwordHash)
-            createNewUser(username, passwordHash)
+            createNewUser(user_username, passwordHash)
                 .then((data) = res.status(201).send({message:'NEW USER CREATED'}))
                 // .then((data) = res.status(201).json('NEW USER CREATED'))
                 // .then((data) = console.log('data:', data))
@@ -63,11 +63,11 @@ app.post('/login', (req, res) => {
     // let { body } = req;
     // let { username, password } = body;
     // let passwordRaw = password;
-    let username = req.body.username
+    let user_username = req.body.user_username
     let passwordRaw = req.body.passwordRaw
     // let user = req.params.username
     console.log('raw password:', passwordRaw)
-    getPasswordHashByUser(username)
+    getPasswordHashByUser(user_username)
     .then((passwordHash) => {
         if(passwordHash){
             console.log('users hashed password: ', passwordHash)
@@ -117,7 +117,7 @@ app.post('/login', (req, res) => {
 
 //data demo:
 
-app.get('/', async (req,res) => {
+app.get('/users', async (req,res) => {
     console.log('Getting from /');
     const result = await knex('users_table')
         .select('*');
@@ -133,5 +133,119 @@ app.get('/', async (req,res) => {
 //         .then(data => data)
 //     res.status(200).json(result);
 // });
+
+//get all blogs
+app.get('/blogs', async (req,res) => {
+    console.log('Getting from /blogs');
+    const result = await knex('blogs_table')
+        .select('*');
+    res.status(200).json(result);
+});
+
+//get blogs for user
+app.get('/blogs/:username', (req, res) => {
+    // let username = req.body.username;
+    let blog_username = req.params.username;
+    console.log('searching blogs for username: ', req.params.username)
+    knex.from('blogs_table').innerJoin('users_table', 'blogs_table.blog_username', 'users_table.user_username')
+        .select('blogs_table.blog_username', 'blogs_table.title', 'blogs_table.content', 'blogs_table.updated_at')
+        .where({blog_username: blog_username})
+        .then(data => {
+            console.log('data from search:', data);
+            res.status(201).json(data)})
+        .catch(err =>
+            res.status(404).json('No blogs posted')
+        )
+});
+
+async function createNewBlog(blog_username, title, content){
+    await knex('users_table')
+        .where({user_username: blog_username})
+        .then(data => {
+            if (data.length > 0 && content.length < 100 ) {
+                //if user exists, post blog for user
+                console.log('user table data.length: ', data.length)
+                knex('blogs_table')
+                    .insert({ blog_username: blog_username, title: title, content: content })
+                    .returning('title')
+                    // .then(console.log('returning title: ', title))
+                    .then((data) = res.status(201).json(`BLOG CREATED ${title}`))
+                    // .catch((err) => res.status(500).json(err))
+            } else {
+                console.log('401 Please Login')
+                res.status(401).send('Please Login.')
+                //dont post blog for user
+            }
+        })
+        .catch((err) => res.status(500).json(err))
+}
+
+//create blog
+app.post('/blogs', (req, res) => {
+    let blog_username = req.body.blog_username;
+    let title = req.body.title;
+    let content = req.body.content;
+    //check if user exists
+    knex('users_table')
+        .where({user_username: blog_username})
+        .then(data => {
+            if (data.length > 0 && content.length < 100 ) {
+                //if user exists, post blog for user
+                console.log('user table data.length: ', data.length)
+                knex('blogs_table')
+                    .insert({ blog_username: blog_username, title: title, content: content })
+                    .returning('title')
+                    .then(console.log('returning title: ', title))
+                    .then((data) = res.status(201).json(`BLOG CREATED ${title}`))
+                    // .catch((err) => res.status(500).json(err))
+            } else {
+                console.log('401 Please Login')
+                res.status(401).send('Please Login.')
+                //dont post blog for user
+            }
+        })
+        // .then((data) => {console.log('blog data created: ', data)})
+        // .then((data) = res.status(201).send({message:`NEW BLOG ${title} CREATED`}))
+        .catch((err) => res.status(500).json(err));
+});
+
+// //edit blog
+// app.put('/blogs', (req, res) => {
+//     let blog_username = req.body.blog_username;
+//     let title = req.body.title;
+//     let content = req.body.content;
+//     //check if user exists
+//     knex('users_table')
+//         .where({user_username: blog_username})
+//         .then(data => {
+//             if (data.length > 0 && content.length < 100 ) {
+//                 //if user exists, post blog for user
+//                 console.log('data.length: ', data.length)
+//                 knex('blogs_table')
+//                 .where({title: title})
+//                 .update({
+//                     content: content})
+//                 .returning('title')
+//                 .then((data) = res.status(201).json(`BLOG UPDATED ${title}`))
+//             } else {
+//                 console.log('401 Please Login')
+//                 res.status(401).send('Please Login.')
+//                 //dont post blog for user
+//             }
+//         })
+//         .catch((err) => res.status(500).json(err))
+// });
+
+// //delete blog
+// app.delete('/blogs/:title', (req, res) => {
+//     const blog_title = req.params.title;
+//     knex('blogs_table')
+//         .where({title: blog_title})
+//         .del()
+//         .catch((err) => res.status(500).json(err))
+// });
+
+
+// const port = process.env.PORT || 8080;
 
 module.exports = app;
