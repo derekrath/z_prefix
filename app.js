@@ -26,17 +26,25 @@ console.log(`NODE ENVIRONMENT IN HEROKU: `, process.env.NODE_ENV);
 app.post('/users', (req, res) => {
     let { body } = req;
     let { user_username, passwordRaw } = body;
-    console.log('user received: ', user_username)
-
     hash(passwordRaw, saltRounds)
         .then((passwordHash) => {
-            console.log('Raw password: ', passwordRaw)
-            console.log('Hashed Password: ', passwordHash)
             createNewUser(user_username, passwordHash)
-                .then((data) = res.status(201).send({message:'NEW USER CREATED'}))
-                // .then((data) = res.status(201).json('NEW USER CREATED'))
-                // .then((data) = console.log('data:', data))
+                // .then((data) = res.status(201).send({message:'NEW USER CREATED'}))
+                // .then(data => {console.log('app data: ', data)})
+                .then(data => {
+                    if(data.length > 0){
+                        console.log('User was created. Result from controller is > 0? = ', data.length)
+                //         // res.status(201).send('This username does not exist.')
+                        res.status(201).send({message:'NEW USER CREATED'})
+                    }
+                    else{
+                        console.log('result from controller is 0? = ', data.length)
+                        // return data.message = 'hey'
+                        res.status(401).send({message: 'USERNAME IS ALREADY IN USE'})
+                    }
+                })
                 .catch((err) => res.status(500).json(err));
+                // .catch((err) => res.status(500).json(err));
         })
         .catch((err) => res.status(500).json(err));
 });
@@ -44,7 +52,7 @@ app.post('/users', (req, res) => {
 // app.post('/login', (req, res) => {
 //     let username = req.body.username
 //     let password = req.body.password
-  
+
 //     knex.select('id', 'username')
 //       .from('users_table')
 //       .where({ username })
@@ -58,35 +66,37 @@ app.post('/users', (req, res) => {
 //       })
 //   })
 
-//login user
+//login user with username and raw password
 app.post('/login', (req, res) => {
     // let { body } = req;
     // let { username, password } = body;
     // let passwordRaw = password;
-    let user_username = req.body.user_username
-    let passwordRaw = req.body.passwordRaw
+    let username = req.body.username
+    // could be raw or hash!!!!
+    let password = req.body.password
     // let user = req.params.username
-    console.log('raw password:', passwordRaw)
-    getPasswordHashByUser(user_username)
+    getPasswordHashByUser(username)
     .then((passwordHash) => {
         if(passwordHash){
-            console.log('users hashed password: ', passwordHash)
-        //         console.log('Raw password supplied:', passwordRaw)
-        //         console.log('Hashed Password form db', passwordHash)
-            compare( passwordRaw, passwordHash )
-            .then((isMatch) => {
-                // if (isMatch) res.status(202).json('PASSWORDS MATCH');
-                if (isMatch) res.status(202).json('LOGIN SUCCESSFUL');
-                // if (isMatch) res.status(200).send({message:'LOGIN SUCCESSFUL'})
-            // if (isMatch) res.status(202).json(result[0]);
-                // if (isMatch) res.status(202).send(result[0]);
-                // else res.status(401).json('NO PASSWORD MATCH');
-                else res.status(401).json('INVALID USERNAME OR PASSWORD');
-                // else res.status(401).send({message:'INVALID USERNAME OR PASSWORD'})
-            })
+            if(password == passwordHash) {res.status(202).json(passwordHash)}
+            else{
+                let passwordRaw = password;
+                compare( passwordRaw, passwordHash )
+                .then((isMatch) => {
+                    // if (isMatch) res.status(202).json('PASSWORDS MATCH');
+                    // if (isMatch) res.status(202).json('LOGIN SUCCESSFUL');
+                    // if (isMatch) res.status(202).send({message: 'yes'});
+                    // if (isMatch) {console.log(); res.status(202).send(passwordHash)}
+                if (isMatch) res.status(202).json(passwordHash);
+                    // if (isMatch) res.status(202).send(result[0]);
+                    // else res.status(401).json('NO PASSWORD MATCH');
+                    // else res.status(401).json('INVALID PASSWORD');
+                    else {res.status(401).send({message:'INVALID PASSWORD'})}
+                })
+            }
         }
-        // else res.status(401).send({message:'INVALID USERNAME OR PASSWORD'})
-        else res.status(401).json('INVALID USERNAME OR PASSWORD')
+        // else res.status(401).send({message:'INVALID USERNAME'})
+        else res.status(401).json('INVALID USERNAME')
     })
     // .catch((err) => res.status(500).json(err));
     .catch((err) => res.status(500).send(err));
@@ -118,7 +128,6 @@ app.post('/login', (req, res) => {
 //data demo:
 
 app.get('/users', async (req,res) => {
-    console.log('Getting from /');
     const result = await knex('users_table')
         .select('*');
     res.status(200).json(result);
@@ -136,7 +145,6 @@ app.get('/users', async (req,res) => {
 
 //get all blogs
 app.get('/blogs', async (req,res) => {
-    console.log('Getting from /blogs');
     const result = await knex('blogs_table')
         .select('*');
     res.status(200).json(result);
@@ -145,34 +153,30 @@ app.get('/blogs', async (req,res) => {
 //get blogs for user
 app.get('/blogs/:username', (req, res) => {
     // let username = req.body.username;
-    let blog_username = req.params.username;
-    console.log('searching blogs for username: ', req.params.username)
+    let username = req.params.username;
     knex.from('blogs_table').innerJoin('users_table', 'blogs_table.blog_username', 'users_table.user_username')
         .select('blogs_table.blog_username', 'blogs_table.title', 'blogs_table.content', 'blogs_table.updated_at')
-        .where({blog_username: blog_username})
+        .where({blog_username: username})
         .then(data => {
-            console.log('data from search:', data);
             res.status(201).json(data)})
         .catch(err =>
             res.status(404).json('No blogs posted')
         )
 });
 
-async function createNewBlog(blog_username, title, content){
+async function createNewBlog(username, title, content){
     await knex('users_table')
-        .where({user_username: blog_username})
+        .where({user_username: username})
         .then(data => {
             if (data.length > 0 && content.length < 100 ) {
                 //if user exists, post blog for user
-                console.log('user table data.length: ', data.length)
                 knex('blogs_table')
-                    .insert({ blog_username: blog_username, title: title, content: content })
+                    .insert({ blog_username: username, title: title, content: content })
                     .returning('title')
                     // .then(console.log('returning title: ', title))
                     .then((data) = res.status(201).json(`BLOG CREATED ${title}`))
                     // .catch((err) => res.status(500).json(err))
             } else {
-                console.log('401 Please Login')
                 res.status(401).send('Please Login.')
                 //dont post blog for user
             }
@@ -181,25 +185,23 @@ async function createNewBlog(blog_username, title, content){
 }
 
 //create blog
-app.post('/blogs', (req, res) => {
-    let blog_username = req.body.blog_username;
+app.post('/blogs/:username', (req, res) => {
+    let username = req.body.blog_username;
     let title = req.body.title;
     let content = req.body.content;
     //check if user exists
     knex('users_table')
-        .where({user_username: blog_username})
+        .where({user_username: username})
         .then(data => {
             if (data.length > 0 && content.length < 100 ) {
                 //if user exists, post blog for user
-                console.log('user table data.length: ', data.length)
                 knex('blogs_table')
-                    .insert({ blog_username: blog_username, title: title, content: content })
+                    .insert({ blog_username: username, title: title, content: content })
                     .returning('title')
                     .then(console.log('returning title: ', title))
                     .then((data) = res.status(201).json(`BLOG CREATED ${title}`))
                     // .catch((err) => res.status(500).json(err))
             } else {
-                console.log('401 Please Login')
                 res.status(401).send('Please Login.')
                 //dont post blog for user
             }
@@ -210,13 +212,10 @@ app.post('/blogs', (req, res) => {
 });
 
 // //edit blog
-app.put('/blogs', (req, res) => {
-    let blog_username = req.body.blog_username;
+app.put('/blogs/:username', (req, res) => {
+    let username = req.body.blog_username;
     let title = req.body.title;
     let content = req.body.content;
-    console.log('edited blog user: ', blog_username);
-    console.log('edited blog title: ', title);
-    console.log('edited blog content: ', content);
     //check if user exists
     // knex('users_table')
         // .where({user_username: blog_username})
@@ -225,7 +224,7 @@ app.put('/blogs', (req, res) => {
                 //if user exists, post blog for user
                 // console.log('data.length: ', data.length)
                 knex('blogs_table')
-                .where({title: title})
+                .where({blog_username: username, title: title})
                 .update({
                     content: content})
                 .returning('title')
@@ -239,14 +238,15 @@ app.put('/blogs', (req, res) => {
         .catch((err) => res.status(500).json(err))
 });
 
-// //delete blog
-// app.delete('/blogs/:title', (req, res) => {
-//     const blog_title = req.params.title;
-//     knex('blogs_table')
-//         .where({title: blog_title})
-//         .del()
-//         .catch((err) => res.status(500).json(err))
-// });
+//delete blog
+app.delete('/blogs/:username', (req, res) => {
+    const username = req.body.blog_username;
+    const title = req.body.title;
+    knex('blogs_table')
+        .where({blog_username: username, title: title})
+        .del()
+        .catch((err) => res.status(500).json(err))
+});
 
 
 // const port = process.env.PORT || 8080;
