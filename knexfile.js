@@ -16,8 +16,8 @@
 // };
 
 // connection: 'postgres://postgres:docker@localhost/postgres'
-const connectionString = process.env.DB_CONNECTION_STRING; 
-// const connectionString = process.env.DATABASE_URL;
+// const connectionString = process.env.DB_CONNECTION_STRING; 
+const connectionString = process.env.DATABASE_URL;
 // const connection = {
 //   client: "pg",
 //   connection: process.env.DB_CONNECTION_STRING,
@@ -53,10 +53,8 @@ module.exports = {
 
   development: {
     client: "pg",
-    // connection: connectionString,
-    // connection: 'postgres://postgres:docker@localhost/postgres',
-    connection: 'postgres://postgres:docker@db:5432/postgres',
-    // connection: process.env.DB_CONNECTION_STRING,
+    connection: connectionString,
+    // connection: 'postgres://postgres:docker@db:5432/postgres',
     pool: {
       min: 2,
       max: 10,

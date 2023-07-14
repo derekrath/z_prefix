@@ -5,6 +5,7 @@
 // const environment = process.env.NODE_ENV;
 // module.exports = knex(configs[environment]);
 
+// console.log('dbconnection NODE_ENV: ', NODE_ENV);
 const environment = process.env.NODE_ENV || 'development'
 // NODE_ENV specifically is used (by convention) to state whether a particular environment is a production or a development environment.
 // const environment = process.env.ENVIRONMENT || 'development'

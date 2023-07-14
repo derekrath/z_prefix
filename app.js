@@ -30,15 +30,12 @@ app.post('/users', (req, res) => {
         .then((passwordHash) => {
             createNewUser(user_username, passwordHash)
                 // .then((data) = res.status(201).send({message:'NEW USER CREATED'}))
-                // .then(data => {console.log('app data: ', data)})
                 .then(data => {
                     if(data.length > 0){
-                        console.log('User was created. Result from controller is > 0? = ', data.length)
                 //         // res.status(201).send('This username does not exist.')
                         res.status(201).send({message:'NEW USER CREATED'})
                     }
                     else{
-                        console.log('result from controller is 0? = ', data.length)
                         // return data.message = 'hey'
                         res.status(401).send({message: 'USERNAME IS ALREADY IN USE'})
                     }
@@ -173,7 +170,6 @@ async function createNewBlog(username, title, content){
                 knex('blogs_table')
                     .insert({ blog_username: username, title: title, content: content })
                     .returning('title')
-                    // .then(console.log('returning title: ', title))
                     .then((data) = res.status(201).json(`BLOG CREATED ${title}`))
                     // .catch((err) => res.status(500).json(err))
             } else {
