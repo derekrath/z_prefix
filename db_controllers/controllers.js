@@ -3,13 +3,6 @@
 // const config = require("postgres/lib/types");
 const knex = require("./dbConnection");
 
-// User Functions:
-// create user
-// hashed password
-// create blog
-// get all blogs
-// delete blogs
-// update blogs
 
 function getPasswordHashByUser(username){
     // return knex.select('id', 'username', 'passwordHash')

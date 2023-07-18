@@ -6,7 +6,7 @@ const bcrypt = require('bcryptjs');
 
 // Import User Functions from controllers
 const {createNewUser, getPasswordHashByUser} = require("./db_controllers/controllers");
-
+// ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCf2IcKbVNuEyxbnoo5CU+mN26SVvkSKbTIcwY4O4Dm+l/jZAXiIOUQnj4Ylua7LVmy866$
 // salty server stuff
 const saltRounds = 12;
 const { hash, compare } = bcrypt; 
