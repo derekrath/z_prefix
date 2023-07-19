@@ -48,7 +48,11 @@
 // };
 // <<use this for production
 
-const connectionString = process.env.DATABASE_URL;
+
+
+// const connectionString = process.env.DATABASE_URL;
+
+const connectionString = 'postgres://postgres:docker@localhost/postgres';
 
 module.exports = {
 
