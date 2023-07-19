@@ -17,7 +17,6 @@
 
 // connection: 'postgres://postgres:docker@localhost/postgres'
 // const connectionString = process.env.DB_CONNECTION_STRING; 
-const connectionString = process.env.DATABASE_URL;
 // const connection = {
 //   client: "pg",
 //   connection: process.env.DB_CONNECTION_STRING,
@@ -49,6 +48,8 @@ const connectionString = process.env.DATABASE_URL;
 // };
 // <<use this for production
 
+const connectionString = process.env.DATABASE_URL;
+
 module.exports = {
 
   development: {
@@ -59,10 +60,9 @@ module.exports = {
       min: 2,
       max: 10,
     },
-    // migrations: {
-    //   // tableName: "knex_migrations",
-    //   tableName: "users_table",
-    // },
+    migrations: {
+      tableName: ["users_table","blogs_table"],
+    },
   },
 
   staging: {
@@ -72,9 +72,9 @@ module.exports = {
       min: 2,
       max: 10,
     },
-    // migrations: {
-    //   tableName: "knex_migrations",
-    // },
+    migrations: {
+      tableName: ["users_table","blogs_table"],
+    },
   },
 
   production: {
@@ -84,8 +84,8 @@ module.exports = {
       min: 2,
       max: 10,
     },
-    // migrations: {
-    //   tableName: "knex_migrations",
-    // },
+    migrations: {
+      tableName: ["users_table","blogs_table"],
+    },
   },
 };
