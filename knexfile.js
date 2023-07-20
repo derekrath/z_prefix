@@ -52,16 +52,15 @@
 
 
 // working for dev:
-require('dotenv').config();
+// require('dotenv').config();
 // const connectionString = process.env.DATABASE_URL;
-const connectionString = `postgresql://db:AVNS_tVS3yr8u8LVISeHtwXy@app-daf4bdfe-f252-4617-afc9-b7a5998f199a-do-user-14384336-0.b.db.ondigitalocean.com:25060/db?sslmode=require`;
 
+const connectionString = `postgresql://db:AVNS_tVS3yr8u8LVISeHtwXy@app-daf4bdfe-f252-4617-afc9-b7a5998f199a-do-user-14384336-0.b.db.ondigitalocean.com:25060/db?sslmode=require`;
 // const connectionString = `postgresql://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_DATABASE}?sslmode=require`;
 
-
-const { parse } = require('pg-connection-string');
+// const { parse } = require('pg-connection-string');
 // const connectionString = process.env.DATABASE_URL;
-const dbConfig = parse(connectionString);
+// const dbConfig = parse(connectionString);
 
 module.exports = {
   development: {
