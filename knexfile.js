@@ -53,48 +53,43 @@
 
 // working for dev:
 require('dotenv').config();
-const connectionString = process.env.DATABASE_URL;
+// const connectionString = process.env.DATABASE_URL;
 // const connectionString = `postgresql://db:AVNS_tVS3yr8u8LVISeHtwXy@app-daf4bdfe-f252-4617-afc9-b7a5998f199a-do-user-14384336-0.b.db.ondigitalocean.com:25060/db?sslmode=require`;
 
-module.exports = {
+const connectionString = `postgresql://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_DATABASE}?sslmode=require`;
 
+module.exports = {
   development: {
     client: "pg",
     connection: connectionString,
-    // connection: 'postgres://postgres:docker@db:5432/postgres',
-    // connection: 'your database connection here',
     pool: {
       min: 2,
       max: 10,
     },
     migrations: {
-      tableName: ["users_table","blogs_table"],
+      tableName: ["users_table", "blogs_table"],
     },
   },
-
   staging: {
     client: "pg",
     connection: connectionString,
-    // connection: 'your database connection here',
     pool: {
       min: 2,
       max: 10,
     },
     migrations: {
-      tableName: ["users_table","blogs_table"],
+      tableName: ["users_table", "blogs_table"],
     },
   },
-
   production: {
     client: "pg",
-    // connection: { connectionString, ssl: { rejectUnauthorized: false } },
-    connection: "postgresql://db:AVNS_tVS3yr8u8LVISeHtwXy@app-daf4bdfe-f252-4617-afc9-b7a5998f199a-do-user-14384336-0.b.db.ondigitalocean.com:25060/db?sslmode=require",
+    connection: { connectionString, ssl: { rejectUnauthorized: false } },
     pool: {
       min: 2,
       max: 10,
     },
     migrations: {
-      tableName: ["users_table","blogs_table"],
+      tableName: ["users_table", "blogs_table"],
     },
   },
 };
