@@ -15,7 +15,8 @@
 // module.exports = require('knex')(config);
 
 // new:
-const environment = process.env.NODE_ENV || 'development'
+// const environment = process.env.NODE_ENV || 'development'
+const environment = 'production';
 const config = require('../knexfile.js')[environment];
 const knex = require('knex')(config);
 module.exports = knex;
