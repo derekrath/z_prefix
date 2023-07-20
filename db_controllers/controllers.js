@@ -12,9 +12,8 @@
 // *******************************************
 // *******************************************
 // try this for a working deployment:
-const environment = process.env.NODE_ENV || 'development';
-const config = require('../knexfile.js')[environment];
-const knex = require('knex')(config);
+// const environment = process.env.NODE_ENV || 'development';
+const knex = require('knex')({client: 'pg', connection: 'postgresql://db:AVNS_tVS3yr8u8LVISeHtwXy@app-daf4bdfe-f252-4617-afc9-b7a5998f199a-do-user-14384336-0.b.db.ondigitalocean.com:25060/db?sslmode=require'});
 
 function getPasswordHashByUser(username){
     // return knex.select('id', 'username', 'passwordHash')
