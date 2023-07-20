@@ -52,7 +52,7 @@
 
 
 // working for dev:
-// require('dotenv').config();
+require('dotenv').config();
 
 // const connectionString = process.env.DATABASE_URL;
 
@@ -113,7 +113,7 @@ module.exports = {
 
   staging: {
     client: "pg",
-    connection: "postgres://postgres:docker@db:5432/postgres",
+    connection: `postgres://${db.USERNAME}:${db.PASSWORD}@${db.HOSTNAME}:${db.PORT}/${db.DATABASE}`,
     pool: {
       min: 2,
       max: 10,
@@ -125,7 +125,7 @@ module.exports = {
 
   production: {
     client: "pg",
-    connection: "postgres://postgres:docker@db:5432/postgres",
+    connection: `postgres://${db.USERNAME}:${db.PASSWORD}@${db.HOSTNAME}:${db.PORT}/${db.DATABASE}`,
     pool: {
       min: 2,
       max: 10,
