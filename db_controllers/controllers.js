@@ -3,7 +3,6 @@
 // const config = require("postgres/lib/types");
 const knex = require("./dbConnection");
 
-
 function getPasswordHashByUser(username){
     // return knex.select('id', 'username', 'passwordHash')
     return knex.select('passwordHash')
@@ -57,21 +56,5 @@ function createNewUser(username, passwordHash){
       })
       .catch((err) => res.status(500).json(err));
 }
-
-// function createNewUser(username, passwordHash){
-//   console.log('username', username);
-//   console.log('passwordHash', passwordHash)
-//   return knex('users_table')
-//       .where({ user_username: username })
-//       .then((result) => {
-//         if (result.length > 0) {
-//           console.log('username exists: ', result[0].user_username)
-//           return result[0].user_username
-//         } else {
-//           console.log('username does not exist')
-//           return undefined
-//         }
-//       })
-// }
 
 module.exports = {createNewUser, getPasswordHashByUser}
