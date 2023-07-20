@@ -4,11 +4,17 @@
 // *******************************************
 // *******************************************
 // user this after successfully deploying:
-const knex = require("./dbConnection");
+// const knex = require("./dbConnection");
 // *******************************************
 // *******************************************
 // use this for initial deployment to get database connection parameter after it provisions:
 // const knex = require('knex')({client: 'pg'});
+// *******************************************
+// *******************************************
+// try this for a working deployment:
+const environment = process.env.NODE_ENV || 'development';
+const config = require('../knexfile.js')[environment];
+const knex = require('knex')(config);
 
 function getPasswordHashByUser(username){
     // return knex.select('id', 'username', 'passwordHash')
