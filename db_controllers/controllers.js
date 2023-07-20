@@ -4,11 +4,11 @@
 // *******************************************
 // *******************************************
 // user this after successfully deploying:
-// const knex = require("./dbConnection");
+const knex = require("./dbConnection");
 // *******************************************
 // *******************************************
 // use this for initial deployment to get database connection parameter after it provisions:
-const knex = require('knex')({client: 'pg'});
+// const knex = require('knex')({client: 'pg'});
 // *******************************************
 // *******************************************
 // try this for a working deployment:

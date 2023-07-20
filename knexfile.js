@@ -67,8 +67,11 @@ module.exports = {
       max: 10,
     },
     migrations: {
-      tableName: ["users_table", "blogs_table"],
+      directory: './migrations',
     },
+    // migrations: {
+    //   tableName: ["users_table", "blogs_table"],
+    // },
   },
   staging: {
     client: "pg",
@@ -77,8 +80,11 @@ module.exports = {
       min: 2,
       max: 10,
     },
+    // migrations: {
+    //   tableName: ["users_table", "blogs_table"],
+    // },
     migrations: {
-      tableName: ["users_table", "blogs_table"],
+      directory: './migrations',
     },
   },
   production: {
@@ -89,8 +95,11 @@ module.exports = {
       max: 10,
     },
     migrations: {
-      tableName: ["users_table", "blogs_table"],
+      directory: './migrations',
     },
+    // migrations: {
+    //   tableName: ["users_table", "blogs_table"],
+    // },
   },
 };
 
