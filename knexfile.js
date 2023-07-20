@@ -125,10 +125,7 @@ module.exports = {
 
   production: {
     client: "pg",
-    connection: {
-      connectionString: "postgres://postgres:docker@db:5432/postgres",
-      ssl: { rejectUnauthorized: false },
-    },
+    connection: "postgres://postgres:docker@db:5432/postgres",
     pool: {
       min: 2,
       max: 10,
