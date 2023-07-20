@@ -58,6 +58,11 @@ const connectionString = process.env.DATABASE_URL;
 
 // const connectionString = `postgresql://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_DATABASE}?sslmode=require`;
 
+
+const { parse } = require('pg-connection-string');
+// const connectionString = process.env.DATABASE_URL;
+const dbConfig = parse(connectionString);
+
 module.exports = {
   development: {
     client: "pg",
@@ -89,7 +94,15 @@ module.exports = {
   },
   production: {
     client: "pg",
-    connection: { connectionString, ssl: { rejectUnauthorized: false } },
+    // connection: { connectionString, ssl: { rejectUnauthorized: false } },
+    connection: {
+      host: dbConfig.host,
+      port: dbConfig.port,
+      user: dbConfig.user,
+      password: dbConfig.password,
+      database: dbConfig.database,
+      ssl: { rejectUnauthorized: false },
+    },
     pool: {
       min: 2,
       max: 10,
