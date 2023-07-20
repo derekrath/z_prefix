@@ -9,7 +9,7 @@
 // NODE_ENV specifically is used (by convention) to state whether a particular environment is a production or a development environment.
 // const environment = process.env.ENVIRONMENT || 'development'
 
-// working:
+// working on dev:
 const environment = process.env.NODE_ENV || 'development'
 const config = require('../knexfile.js')[environment];
 module.exports = require('knex')(config);
