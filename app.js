@@ -16,8 +16,14 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-const knex = require('./db_controllers/dbConnection');
-const { check } = require('yargs');
+// testing deployment with this:
+const environment = 'production';
+const config = require('../knexfile.js')[environment];
+const knex = require('knex')(config);
+
+// for dev:
+// const knex = require('./db_controllers/dbConnection');
+// const { check } = require('yargs');
 
 console.log(`NODE ENVIRONMENT IN HEROKU: `, process.env.NODE_ENV);
 
