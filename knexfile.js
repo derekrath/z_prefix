@@ -48,48 +48,93 @@
 // };
 // <<use this for production
 
-require('dotenv').config();
 
-const connectionString = process.env.DATABASE_URL;
 
-// const connectionString = 'postgres://postgres:docker@localhost/postgres';
 
+// working for dev:
+// require('dotenv').config();
+
+// const connectionString = process.env.DATABASE_URL;
+
+// module.exports = {
+
+//   development: {
+//     client: "pg",
+//     connection: connectionString,
+//     // connection: 'postgres://postgres:docker@db:5432/postgres',
+//     pool: {
+//       min: 2,
+//       max: 10,
+//     },
+//     migrations: {
+//       tableName: ["users_table","blogs_table"],
+//     },
+//   },
+
+//   staging: {
+//     client: "pg",
+//     connection: connectionString,
+//     pool: {
+//       min: 2,
+//       max: 10,
+//     },
+//     migrations: {
+//       tableName: ["users_table","blogs_table"],
+//     },
+//   },
+
+//   production: {
+//     client: "pg",
+//     connection: { connectionString, ssl: { rejectUnauthorized: false } },
+//     pool: {
+//       min: 2,
+//       max: 10,
+//     },
+//     migrations: {
+//       tableName: ["users_table","blogs_table"],
+//     },
+//   },
+// };
+
+
+// using for prod:
 module.exports = {
-
   development: {
     client: "pg",
-    connection: connectionString,
-    // connection: 'postgres://postgres:docker@db:5432/postgres',
+    connection: "postgres://postgres:docker@db:5432/postgres",
     pool: {
       min: 2,
       max: 10,
     },
     migrations: {
-      tableName: ["users_table","blogs_table"],
+      tableName: ["users_table", "blogs_table"],
     },
   },
 
   staging: {
     client: "pg",
-    connection: connectionString,
+    connection: "postgres://postgres:docker@db:5432/postgres",
     pool: {
       min: 2,
       max: 10,
     },
     migrations: {
-      tableName: ["users_table","blogs_table"],
+      tableName: ["users_table", "blogs_table"],
     },
   },
 
   production: {
     client: "pg",
-    connection: { connectionString, ssl: { rejectUnauthorized: false } },
+    connection: {
+      connectionString: "postgres://postgres:docker@db:5432/postgres",
+      ssl: { rejectUnauthorized: false },
+    },
     pool: {
       min: 2,
       max: 10,
     },
     migrations: {
-      tableName: ["users_table","blogs_table"],
+      tableName: ["users_table", "blogs_table"],
     },
   },
 };

@@ -10,13 +10,13 @@
 // const environment = process.env.ENVIRONMENT || 'development'
 
 // working:
-// const environment = process.env.NODE_ENV || 'development'
-// const config = require('../knexfile.js')[environment];
-// module.exports = require('knex')(config);
-
-// new:
 const environment = process.env.NODE_ENV || 'development'
 const config = require('../knexfile.js')[environment];
-const knex = require('knex')(config);
-module.exports = knex;
+module.exports = require('knex')(config);
+
+// new:
+// const environment = process.env.NODE_ENV || 'development'
+// const config = require('../knexfile.js')[environment];
+// const knex = require('knex')(config);
+// module.exports = knex;
 
