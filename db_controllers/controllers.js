@@ -4,10 +4,11 @@
 // *******************************************
 // *******************************************
 // user this after successfully deploying:
-// const knex = require("./dbConnection");
+const knex = require("./dbConnection");
 // *******************************************
 // *******************************************
-const knex = require('knex')({client: 'pg'});
+// use this for initial deployment to get database connection parameter after it provisions:
+// const knex = require('knex')({client: 'pg'});
 
 function getPasswordHashByUser(username){
     // return knex.select('id', 'username', 'passwordHash')
