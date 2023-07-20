@@ -54,84 +54,84 @@
 // working for dev:
 require('dotenv').config();
 
-// const connectionString = process.env.DATABASE_URL;
+const connectionString = process.env.DATABASE_URL;
 
-// module.exports = {
-
-//   development: {
-//     client: "pg",
-//     connection: connectionString,
-//     // connection: 'postgres://postgres:docker@db:5432/postgres',
-//     pool: {
-//       min: 2,
-//       max: 10,
-//     },
-//     migrations: {
-//       tableName: ["users_table","blogs_table"],
-//     },
-//   },
-
-//   staging: {
-//     client: "pg",
-//     connection: connectionString,
-//     pool: {
-//       min: 2,
-//       max: 10,
-//     },
-//     migrations: {
-//       tableName: ["users_table","blogs_table"],
-//     },
-//   },
-
-//   production: {
-//     client: "pg",
-//     connection: { connectionString, ssl: { rejectUnauthorized: false } },
-//     pool: {
-//       min: 2,
-//       max: 10,
-//     },
-//     migrations: {
-//       tableName: ["users_table","blogs_table"],
-//     },
-//   },
-// };
-
-
-// using for prod:
 module.exports = {
+
   development: {
     client: "pg",
-    connection: "postgres://postgres:docker@db:5432/postgres",
+    connection: connectionString,
+    // connection: 'postgres://postgres:docker@db:5432/postgres',
     pool: {
       min: 2,
       max: 10,
     },
     migrations: {
-      tableName: ["users_table", "blogs_table"],
+      tableName: ["users_table","blogs_table"],
     },
   },
 
   staging: {
     client: "pg",
-    connection: `postgres://${db.USERNAME}:${db.PASSWORD}@${db.HOSTNAME}:${db.PORT}/${db.DATABASE}`,
+    connection: connectionString,
     pool: {
       min: 2,
       max: 10,
     },
     migrations: {
-      tableName: ["users_table", "blogs_table"],
+      tableName: ["users_table","blogs_table"],
     },
   },
 
   production: {
     client: "pg",
-    connection: `postgres://${db.USERNAME}:${db.PASSWORD}@${db.HOSTNAME}:${db.PORT}/${db.DATABASE}`,
+    connection: { connectionString, ssl: { rejectUnauthorized: false } },
     pool: {
       min: 2,
       max: 10,
     },
     migrations: {
-      tableName: ["users_table", "blogs_table"],
+      tableName: ["users_table","blogs_table"],
     },
   },
 };
+
+
+// using for prod:
+// module.exports = {
+//   development: {
+//     client: "pg",
+//     connection: "postgres://postgres:docker@db:5432/postgres",
+//     pool: {
+//       min: 2,
+//       max: 10,
+//     },
+//     migrations: {
+//       tableName: ["users_table", "blogs_table"],
+//     },
+//   },
+
+//   staging: {
+//     client: "pg",
+//     connection: `postgres://${db.USERNAME}:${db.PASSWORD}@${db.HOSTNAME}:${db.PORT}/${db.DATABASE}`,
+//     pool: {
+//       min: 2,
+//       max: 10,
+//     },
+//     migrations: {
+//       tableName: ["users_table", "blogs_table"],
+//     },
+//   },
+
+//   production: {
+//     client: "pg",
+//     connection: `postgres://${db.USERNAME}:${db.PASSWORD}@${db.HOSTNAME}:${db.PORT}/${db.DATABASE}`,
+//     pool: {
+//       min: 2,
+//       max: 10,
+//     },
+//     migrations: {
+//       tableName: ["users_table", "blogs_table"],
+//     },
+//   },
+// };
