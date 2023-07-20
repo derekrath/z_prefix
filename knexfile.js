@@ -48,7 +48,7 @@
 // };
 // <<use this for production
 
-
+require('dotenv').config();
 
 const connectionString = process.env.DATABASE_URL;
 
