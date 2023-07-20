@@ -7,7 +7,7 @@
 // const knex = require("./dbConnection");
 // *******************************************
 // *******************************************
-const knex = require('knex')({client: 'pg'})
+const knex = require('knex')({client: 'pg'});
 
 function getPasswordHashByUser(username){
     // return knex.select('id', 'username', 'passwordHash')
