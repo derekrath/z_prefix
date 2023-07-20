@@ -52,16 +52,16 @@
 
 
 // working for dev:
-require('dotenv').config();
-
-const connectionString = process.env.DATABASE_URL;
+// require('dotenv').config();
+// const connectionString = process.env.DATABASE_URL;
 
 module.exports = {
 
   development: {
     client: "pg",
-    connection: connectionString,
+    // connection: connectionString,
     // connection: 'postgres://postgres:docker@db:5432/postgres',
+    connection: 'your database connection here',
     pool: {
       min: 2,
       max: 10,
@@ -73,7 +73,8 @@ module.exports = {
 
   staging: {
     client: "pg",
-    connection: connectionString,
+    // connection: connectionString,
+    connection: 'your database connection here',
     pool: {
       min: 2,
       max: 10,
@@ -85,7 +86,8 @@ module.exports = {
 
   production: {
     client: "pg",
-    connection: { connectionString, ssl: { rejectUnauthorized: false } },
+    // connection: { connectionString, ssl: { rejectUnauthorized: false } },
+    connection: 'your database connection here',
     pool: {
       min: 2,
       max: 10,
