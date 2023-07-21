@@ -52,7 +52,7 @@
 
 
 // working for dev:
-require('dotenv').config();
+// require('dotenv').config();
 const connectionString = process.env.DATABASE_URL;
 
 // const connectionString = `postgresql://db:AVNS_tVS3yr8u8LVISeHtwXy@app-daf4bdfe-f252-4617-afc9-b7a5998f199a-do-user-14384336-0.b.db.ondigitalocean.com:25060/db?sslmode=require`;
@@ -109,9 +109,9 @@ module.exports = {
 
   production: {
     client: 'postgresql',
-    connection: process.env.DATABASE_URL+'?ssl=no-verify',
+    // connection: process.env.DATABASE_URL+'?ssl=no-verify',
     // connection,
-    // connection: { connectionString, ssl: { rejectUnauthorized: false, }, },
+    connection: { connectionString, ssl: { rejectUnauthorized: false, }, },
     // connection: connectionString,
     // connection: {
     //   host: dbConfig.host,
