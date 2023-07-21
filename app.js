@@ -16,10 +16,11 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// testing deployment with this:
-const environment = 'production';
-const config = require('../knexfile.js')[environment];
-const knex = require('knex')(config);
+// testing production deployment with this:
+const knex = require('knex')({
+    client: 'pg',
+    connection: 'postgresql://db:AVNS_tVS3yr8u8LVISeHtwXy@app-daf4bdfe-f252-4617-afc9-b7a5998f199a-do-user-14384336-0.b.db.ondigitalocean.com:25060/db?sslmode=require',
+});
 
 // for dev:
 // const knex = require('./db_controllers/dbConnection');
