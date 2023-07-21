@@ -49,8 +49,6 @@
 // <<use this for production
 
 
-
-
 // working for dev:
 require('dotenv').config();
 const connectionString = process.env.DATABASE_URL;
