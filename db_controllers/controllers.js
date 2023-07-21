@@ -4,7 +4,7 @@
 // *******************************************
 // *******************************************
 // user this after successfully deploying:
-// const knex = require("./dbConnection");
+const knex = require("./dbConnection");
 // *******************************************
 // *******************************************
 // use this for initial deployment to get database connection parameter after it provisions:
@@ -14,10 +14,11 @@
 // try this for a working deployment:
 // const knex = require('knex')({client: 'postgresql', connection: 'postgresql://db:AVNS_tVS3yr8u8LVISeHtwXy@app-daf4bdfe-f252-4617-afc9-b7a5998f199a-do-user-14384336-0.b.db.ondigitalocean.com:25060/db?sslmode=require'});
 
-const knex = require('knex')({
-  client: 'pg',
-  connection: 'postgresql://db:AVNS_tVS3yr8u8LVISeHtwXy@app-daf4bdfe-f252-4617-afc9-b7a5998f199a-do-user-14384336-0.b.db.ondigitalocean.com:25060/db?sslmode=require',
-});
+// ????
+// const knex = require('knex')({
+//   client: 'pg',
+//   connection: 'postgresql://db:AVNS_tVS3yr8u8LVISeHtwXy@app-daf4bdfe-f252-4617-afc9-b7a5998f199a-do-user-14384336-0.b.db.ondigitalocean.com:25060/db?sslmode=require',
+// });
 
 async function fetchUserData(username) {
   try {
