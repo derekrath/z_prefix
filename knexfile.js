@@ -60,16 +60,16 @@ const connectionString = process.env.DATABASE_URL;
 // const connectionString = process.env.DATABASE_URL;
 // const dbConfig = parse(connectionString);
 
-const connection = {
-  connectionString: process.env.DATABASE_URL,
-  ssl: {
-    rejectUnauthorized: false,
-  },
-};
+// const connection = {
+//   connectionString: process.env.DATABASE_URL,
+//   ssl: {
+//     rejectUnauthorized: false,
+//   },
+// };
 
 module.exports = {
   development: {
-    client: "pg",
+    client: 'postgresql',
     connection: connectionString,
     // pool: {
     //   min: 2,
@@ -81,10 +81,13 @@ module.exports = {
     // migrations: {
     //   tableName: ["users_table", "blogs_table"],
     // },
+    seeds: {
+      directory: './seeds'
+    }
   },
 
   staging: {
-    client: "pg",
+    client: 'postgresql',
     connection: connectionString,
     // pool: {
     //   min: 2,
@@ -96,11 +99,15 @@ module.exports = {
     migrations: {
       directory: './migrations',
     },
+    seeds: {
+      directory: './seeds'
+    }
   },
 
   production: {
-    client: "pg",
-    connection,
+    client: 'postgresql',
+    connection: process.env.DATABASE_URL+'?ssl=no-verify',
+    // connection,
     // connection: { connectionString, ssl: { rejectUnauthorized: false, }, },
     // connection: connectionString,
     // connection: {
@@ -118,10 +125,14 @@ module.exports = {
     migrations: {
       directory: './migrations',
     },
+    seeds: {
+      directory: './seeds'
+    }
     // migrations: {
     //   tableName: ["users_table", "blogs_table"],
     // },
   },
+
 };
 
 
