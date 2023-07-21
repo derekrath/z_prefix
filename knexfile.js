@@ -93,7 +93,8 @@ module.exports = {
   },
   production: {
     client: "pg",
-    connection: { connectionString, ssl: { rejectUnauthorized: false } },
+    // connection: { connectionString, ssl: { rejectUnauthorized: false } },
+    connection: connectionString,
     // connection: {
     //   host: dbConfig.host,
     //   port: dbConfig.port,
