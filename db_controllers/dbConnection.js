@@ -10,10 +10,15 @@
 // const environment = process.env.ENVIRONMENT || 'development'
 
 // working on dev:
-const environment = process.env.NODE_ENV || 'development'
-// const environment = 'production';
-const config = require('../knexfile.js')[environment];
-module.exports = require('knex')(config);
+// const environment = process.env.NODE_ENV || 'development'
+// const config = require('../knexfile.js')[environment];
+// module.exports = require('knex')(config);
+
+// for prod:
+const knex = require('knex');
+const config = require('../knexfile');
+const environment = process.env.NODE_ENV;
+module.exports = knex(config[environment]);
 
 // new:
 // const environment = process.env.NODE_ENV || 'development'

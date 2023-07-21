@@ -60,14 +60,21 @@ const connectionString = process.env.DATABASE_URL;
 // const connectionString = process.env.DATABASE_URL;
 // const dbConfig = parse(connectionString);
 
+const connection = {
+  connectionString: process.env.DATABASE_URL,
+  ssl: {
+    rejectUnauthorized: false,
+  },
+};
+
 module.exports = {
   development: {
     client: "pg",
     connection: connectionString,
-    pool: {
-      min: 2,
-      max: 10,
-    },
+    // pool: {
+    //   min: 2,
+    //   max: 10,
+    // },
     migrations: {
       directory: './migrations',
     },
@@ -75,13 +82,14 @@ module.exports = {
     //   tableName: ["users_table", "blogs_table"],
     // },
   },
+
   staging: {
     client: "pg",
     connection: connectionString,
-    pool: {
-      min: 2,
-      max: 10,
-    },
+    // pool: {
+    //   min: 2,
+    //   max: 10,
+    // },
     // migrations: {
     //   tableName: ["users_table", "blogs_table"],
     // },
@@ -89,10 +97,12 @@ module.exports = {
       directory: './migrations',
     },
   },
+
   production: {
     client: "pg",
-    // connection: { connectionString, ssl: { rejectUnauthorized: false } },
-    connection: connectionString,
+    connection,
+    // connection: { connectionString, ssl: { rejectUnauthorized: false, }, },
+    // connection: connectionString,
     // connection: {
     //   host: dbConfig.host,
     //   port: dbConfig.port,
@@ -101,10 +111,10 @@ module.exports = {
     //   database: dbConfig.database,
     //   ssl: { rejectUnauthorized: false },
     // },
-    pool: {
-      min: 2,
-      max: 10,
-    },
+    // pool: {
+    //   min: 2,
+    //   max: 10,
+    // },
     migrations: {
       directory: './migrations',
     },
