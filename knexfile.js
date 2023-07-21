@@ -49,6 +49,8 @@
 // <<use this for production
 
 
+
+
 // working for dev:
 require('dotenv').config();
 const connectionString = process.env.DATABASE_URL;
@@ -68,6 +70,7 @@ const connectionString = process.env.DATABASE_URL;
 // };
 
 module.exports = {
+
   development: {
     client: 'postgresql',
     connection: connectionString,
