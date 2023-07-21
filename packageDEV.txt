@@ -4,7 +4,7 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "start:server": "node server.js",
+    "start:server": "nodemon server.js",
     "start:knex": "npx knex migrate:rollback && npx knex migrate:latest && npx knex seed:run",
     "start": "npm run start:knex && npm run start:server",
     "test": "echo \"Error: no test specified\" && exit 1"
