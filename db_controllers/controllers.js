@@ -20,19 +20,6 @@ const knex = require("./dbConnection");
 //   connection: 'postgresql://db:AVNS_tVS3yr8u8LVISeHtwXy@app-daf4bdfe-f252-4617-afc9-b7a5998f199a-do-user-14384336-0.b.db.ondigitalocean.com:25060/db?sslmode=require',
 // });
 
-async function fetchUserData(username) {
-  try {
-    const userData = await knex('users_table').where({ username });
-    console.log('Fetched user data:', userData);
-    return userData;
-  } catch (error) {
-    console.error('Error fetching user data:', error);
-    throw error;
-  }
-}
-
-module.exports = { fetchUserData };
-
 function getPasswordHashByUser(username){
     // return knex.select('id', 'username', 'passwordHash')
     return knex.select('passwordHash')
