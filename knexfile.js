@@ -52,9 +52,7 @@
 
 
 // working for dev:
-require('dotenv').config();
 
-// const connectionString = `postgresql://db:AVNS_tVS3yr8u8LVISeHtwXy@app-daf4bdfe-f252-4617-afc9-b7a5998f199a-do-user-14384336-0.b.db.ondigitalocean.com:25060/db?sslmode=require`;
 // const connectionString = `postgresql://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_DATABASE}?sslmode=require`;
 
 // const { parse } = require('pg-connection-string');
@@ -67,7 +65,12 @@ require('dotenv').config();
     //     rejectUnauthorized: false,
     //   },
     // };
-const connectionString = process.env.DATABASE_URL;
+    
+    
+    
+require('dotenv').config();
+const connectionString = `postgresql://db:AVNS_tVS3yr8u8LVISeHtwXy@app-daf4bdfe-f252-4617-afc9-b7a5998f199a-do-user-14384336-0.b.db.ondigitalocean.com:25060/db?sslmode=require`;
+// const connectionString = process.env.DATABASE_URL;
 
 module.exports = {
 

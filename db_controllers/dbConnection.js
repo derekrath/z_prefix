@@ -38,7 +38,7 @@
 // module.exports = output;
 
 require('dotenv').config();
-const environment = process.env.NODE_ENV || 'development'
-// const environment = process.env.NODE_ENV
+// const environment = process.env.NODE_ENV || 'development';
+const environment = 'production';
 const config = require('../knexfile.js')[environment];
 module.exports = require('knex')(config);
