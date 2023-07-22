@@ -30,9 +30,15 @@
 
 
 // for prod:
-const knex = require('knex');
-const config = require('../knexfile');
-const environment = process.env.NODE_ENV;
-const output = knex(config[environment]);
-console.log('output;', output)
-module.exports = output;
+// const knex = require('knex');
+// const config = require('../knexfile');
+// const environment = process.env.NODE_ENV;
+// const output = knex(config[environment]);
+// console.log('output;', output)
+// module.exports = output;
+
+require('dotenv').config();
+const environment = process.env.NODE_ENV || 'development'
+// const environment = process.env.NODE_ENV
+const config = require('../knexfile.js')[environment];
+module.exports = require('knex')(config);
