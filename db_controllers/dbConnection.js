@@ -39,7 +39,7 @@
 
 
 require('dotenv').config();
-process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';  //don't use this in production, testing DigitalOCean db connectio only
-// const environment = process.env.NODE_ENV || 'development';
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';  //don't use this in production, testing DigitalOcean db connectio only
+const environment = process.env.NODE_ENV || 'development';
 const config = require('../knexfile.js')[environment];
 module.exports = require('knex')(config);
