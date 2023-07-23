@@ -37,7 +37,9 @@
 // console.log('output;', output)
 // module.exports = output;
 
+
 require('dotenv').config();
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 const environment = process.env.NODE_ENV || 'development';
 // const environment = 'production';
 const config = require('../knexfile.js')[environment];

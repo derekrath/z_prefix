@@ -69,14 +69,18 @@
     
     
 require('dotenv').config();
-const connectionString = `postgresql://db:AVNS_tVS3yr8u8LVISeHtwXy@app-daf4bdfe-f252-4617-afc9-b7a5998f199a-do-user-14384336-0.b.db.ondigitalocean.com:25060/db`;
-// const connectionString = process.env.DATABASE_URL;
+console.log('DATABASE_URL from dotenv:', process.env.DATABASE_URL)
+// const connectionString = `postgresql://db:AVNS_tVS3yr8u8LVISeHtwXy@app-daf4bdfe-f252-4617-afc9-b7a5998f199a-do-user-14384336-0.b.db.ondigitalocean.com:25060/db`;
+const connectionString = process.env.DATABASE_URL;
+console.log('connectionString: ', connectionString)
 
 module.exports = {
 
   development: {
     client: 'pg',
-    connection: connectionString,
+    // connection: connectionString,
+    connection: { connectionString, ssl: { rejectUnauthorized: false, }, },
+
     // pool: {
     //   min: 2,
     //   max: 10,
