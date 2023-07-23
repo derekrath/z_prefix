@@ -69,7 +69,8 @@
     
     
 require('dotenv').config();
-// const connectionString = `postgresql://db:AVNS_tVS3yr8u8LVISeHtwXy@app-daf4bdfe-f252-4617-afc9-b7a5998f199a-do-user-14384336-0.b.db.ondigitalocean.com:25060/db`;
+// dont use backticks? for the connection:
+// const connectionString = 'postgresql://db:AVNS_tVS3yr8u8LVISeHtwXy@app-daf4bdfe-f252-4617-afc9-b7a5998f199a-do-user-14384336-0.b.db.ondigitalocean.com:25060/db';
 const connectionString = process.env.DATABASE_URL;
 console.log('connectionString: ', connectionString)
 console.log('environment: ', process.env.NODE_ENV)
@@ -78,9 +79,9 @@ module.exports = {
 
   development: {
     client: 'pg',
-    // connection: connectionString,
-    connection: { connectionString, ssl: { rejectUnauthorized: false, }, },
-
+    connection: connectionString,
+    // if using DigitalOCean DB:
+    // connection: { connectionString, ssl: { rejectUnauthorized: false, }, },
     // pool: {
     //   min: 2,
     //   max: 10,
