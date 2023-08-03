@@ -17,7 +17,7 @@ RUN rm -f node_modules
 RUN npm install
 
 # delete on production
-# RUN npm install -g nodemon
+RUN npm install -g nodemon
 
 EXPOSE 8080
 
