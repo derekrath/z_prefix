@@ -19,6 +19,8 @@ RUN npm install
 # delete on production
 # RUN npm install -g nodemon
 
-EXPOSE 8080
+ENV PORT=8080
+# EXPOSE 8080
+EXPOSE $PORT
 
 CMD ["npm", "run", "start"]
