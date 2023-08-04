@@ -20,8 +20,8 @@ app.use(express.urlencoded({ extended: true }));
 const knex = require('./db_controllers/dbConnection');
 // const { check } = require('yargs');
 
-console.log(`NODE ENVIRONMENT IN HEROKU : `, process.env.NODE_ENV);
-console.log(`PORT IN HEROKU : `, process.env.PORT);
+// console.log(`NODE ENVIRONMENT IN HEROKU : `, process.env.NODE_ENV);
+// console.log(`PORT IN HEROKU : `, process.env.PORT);
 
 // Get data from ui and update Database
 //create user
