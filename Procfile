@@ -1,3 +1,2 @@
-# web: node server.js
 # web:   npm run start
-web: npm --optimize_for_size --max_old_space_size=460 --gc_interval=100 run start
+web: --optimize_for_size --max_old_space_size=512 --gc_interval=100 npm run start
