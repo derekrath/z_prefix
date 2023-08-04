@@ -6,7 +6,7 @@ const PORT = (process.env.PORT) || 8080// THIS IS IMPORTANT - HEROKU DECIDES WHI
 
 
 app.listen(PORT, () => {
-    console.log(`.env: Server is listening on http://localhost:${PORT}`);
+    console.log(`.env: Server is listening on ${PORT}`);
     console.log(`.env: DATABASE_URL ${process.env.DATABASE_URL}`);
 });
 
