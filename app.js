@@ -22,6 +22,7 @@ const knex = require('./db_controllers/dbConnection');
 
 console.log(`NODE ENVIRONMENT IN HEROKU : `, process.env.NODE_ENV);
 
+
 // Get data from ui and update Database
 //create user
 app.post('/users', (req, res) => {
