@@ -35,7 +35,8 @@
     "knex": "^2.5.1",
     "morgan": "^1.10.0",
     "pg": "^8.7.1",
-    "prop-types": "^15.7.2"
+    "prop-types": "^15.7.2",
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11"
   },
   "devDependencies": {
     "classnames": "^2.3.1",
