@@ -2,8 +2,8 @@
 const app = require('./app');
 
 require("dotenv").config();
-// const PORT = (process.env.PORT) || 8080// THIS IS IMPORTANT - HEROKU DECIDES WHICH PORT
-const PORT = process.env.PORT// THIS IS IMPORTANT - HEROKU DECIDES WHICH PORT
+const PORT = (process.env.PORT) || 8080// THIS IS IMPORTANT - HEROKU DECIDES WHICH PORT
+// const PORT = process.env.PORT// THIS IS IMPORTANT - HEROKU DECIDES WHICH PORT
 
 app.listen(PORT, () => {
     console.log(`.env: Server is listening on ${PORT}`);
